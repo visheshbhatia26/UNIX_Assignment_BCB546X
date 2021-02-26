@@ -39,7 +39,7 @@ By inspecting this file I learned that:
 ## Data Processing
 
 ### Maize Data
-In order to obtain Maize and Teosinte Genotypes in two different files, firstly we have to sort the files, grep the similar ones together and transpose them. 
+In order to obtain Maize and Teosinte Genotypes in two different files, firstly we have to grep the similar ones together, add headers to them and transpose them, sort them and then join at the end. 
 
 ```
 $ cut -f3 fang_et_al_genotypes.txt | sort | uniq -c 
@@ -55,19 +55,20 @@ $ grep 'ZMP' fang_et_al_genotypes.txt > teosinte_genotypes.txt
 This greps and outputs all the maize and tiosinte into separate files. 
 
 ```
-$ head -n 1 fang_et_al_genotypes.txt > headers.txt
+$ head -n 1 fang_et_al_genotypes.txt > headers_genotypes.txt
 ```
 This command pulls out the header into another file. 
 
 ```
-$ cat headers.txt maize_genotypes.txt > maize_headers_genotypes.txt
-$ cat headers.txt teosinte_genotypes.txt > teosinte_headers_genotypes.txt
+$ cat headers_genotypes.txt maize_genotypes.txt > maize_head_genotypes.txt
+$ cat headers_genotypes.txt teosinte_genotypes.txt > teosinte_head_genotypes.txt
 ```
 This step combines the headers file and genotypes file so that both the files now have the header to their individual files. 
 
  ```
- $ awk -f transpose.awk maize_headers_genotypes.txt > transposed.maize_genotypes.txt
- $ awk -f transpose.awk teosinte_headers_genotypes.txt > transposed.teosinte_genotypes.txt
+ $ awk -f transpose.awk maize_head_genotypes.txt > transposed_maize_genotypes.txt
+ $ awk -f transpose.awk teosinte_head_genotypes.txt > transposed_
+ teosinte_genotypes.txt
  ```
  Transposes both the genotypes files to swap the rows and columns. 
  
